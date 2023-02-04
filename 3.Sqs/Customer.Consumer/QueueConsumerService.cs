@@ -29,6 +29,8 @@ public class QueueConsumerService : BackgroundService
     {
         
         var queueUrlResponse = await _sqs.GetQueueUrlAsync(_queueSettings.Value.Name, stoppingToken);
+        
+        _logger.LogInformation("consuming messages");
 
         var receiveMessageRequest = new ReceiveMessageRequest
         {
@@ -38,7 +40,7 @@ public class QueueConsumerService : BackgroundService
             MaxNumberOfMessages = 1
         };
 
-        while (stoppingToken.IsCancellationRequested)
+        while (!stoppingToken.IsCancellationRequested)
         {
             var response = await _sqs.ReceiveMessageAsync(receiveMessageRequest, stoppingToken);
 
@@ -56,7 +58,9 @@ public class QueueConsumerService : BackgroundService
                 object typedMessage = (ISqsMessage)JsonSerializer.Deserialize(message.Body, type)!;
 
                 try
-                {
+                {        
+                    _logger.LogInformation("Message type: {MessageType}", messageType);
+
                     await _mediator.Send(typedMessage, stoppingToken);
                 }
                 catch(Exception ex)

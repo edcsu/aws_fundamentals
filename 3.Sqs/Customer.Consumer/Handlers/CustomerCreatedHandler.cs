@@ -15,9 +15,7 @@ public class CustomerCreatedHandler : IRequestHandler<CustomerCreated>
 
     public Task<Unit> Handle(CustomerCreated request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation(request.Id.ToString());
         _logger.LogInformation(request.FullName);
-        _logger.LogInformation(request.Email);
         return Unit.Task;
     }
 }

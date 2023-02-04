@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Customer.Consumer.Messages;
 
 public class CustomerCreated : ISqsMessage
