@@ -8,12 +8,18 @@ namespace DotLambda;
 public class Function
 {
     /// <summary>
-    /// A simple function that takes a string and does a ToUpper
+    /// A simple function that takes a request and prints it
     /// </summary>
+    /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public void FunctionHandler(ILambdaContext context)
+    public void FunctionHandler(Hello request, ILambdaContext context)
     {
-        context.Logger.LogInformation("Hello from C#");
+        context.Logger.LogInformation($"Hello from {request.World}");
     }
+}
+
+public class Hello
+{
+    public string World { get; set; } = default!;
 }
