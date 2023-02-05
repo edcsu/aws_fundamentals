@@ -13,9 +13,10 @@ public class Function
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public void FunctionHandler(Hello request, ILambdaContext context)
+    public string FunctionHandler(Hello request, ILambdaContext context)
     {
         context.Logger.LogInformation($"Hello from {request.World}");
+        return request.World;
     }
 }
 
