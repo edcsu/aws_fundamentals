@@ -18,7 +18,7 @@ public class CustomerImageService : ICustomerImageService
         var putObjectRequest = new PutObjectRequest
         {
             BucketName    = _bucketName,
-            Key = $"image/{id}",
+            Key = $"images/{id}",
             ContentType = file.ContentType,
             InputStream = file.OpenReadStream(),
             Metadata =
