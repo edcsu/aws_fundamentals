@@ -4,9 +4,18 @@ using Amazon.SecretsManager.Model;
 
 var secretsManagerClient = new AmazonSecretsManagerClient();
 
+/*var listSecretVersionIdsRequest = new ListSecretVersionIdsRequest
+{
+    SecretId = "ApiKey",
+    IncludeDeprecated = true
+};
+
+var resposnse = await secretsManagerClient.ListSecretVersionIdsAsync(listSecretVersionIdsRequest);*/
+
 var request = new GetSecretValueRequest
 {
-    SecretId = "ApiKey"
+    SecretId = "ApiKey",
+    // VersionStage = "AWSCURRENT"
 };
 
 var response = await  secretsManagerClient.GetSecretValueAsync(request);
