@@ -1,4 +1,5 @@
 using System.Net;
+using Amazon.S3;
 using Customers.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +31,20 @@ public class CustomerImageController : ControllerBase
     [HttpGet("customers/{id:guid}/image")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var response = await _customerImageService.GetImageAsync(id);
+            return File(response.ResponseStream, response.Headers.ContentType);
+        }
+        catch (AmazonS3Exception e) when (e.Message is "The specified key doe not exist.")
+        {
+            return NotFound();
+        }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine(e);
+        //     throw;
+        // }
     }
     
     [HttpDelete("customers/{id:guid}/image")]
